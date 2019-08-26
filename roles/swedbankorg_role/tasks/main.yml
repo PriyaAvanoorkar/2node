@@ -1,0 +1,18 @@
+---
+# tasks file for swedbankorg_role
+
+
+  - name: Apigee provision installation
+    command: /opt/apigee/apigee-service/bin/apigee-service apigee-provision install
+
+  - name: Download main config file from s3
+    get_url:
+      url: https://aws-code-kubernetes.s3.eu-central-1.amazonaws.com/apigee_onprem/Corrected/orgConfig
+      dest: /opt/apigee/orgConfig
+      mode: '755'
+
+  - name: format file in unix format
+    command: dos2unix /opt/apigee/orgConfig
+
+  - name: Setup organization
+    command: /opt/apigee/apigee-service/bin/apigee-service apigee-provision setup-org -f /opt/apigee/orgConfig

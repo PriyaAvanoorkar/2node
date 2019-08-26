@@ -1,0 +1,19 @@
+---
+# file: site.yml
+-  hosts: swedbank
+   roles: 
+     - { role: swedbank_role,become: yes}
+
+-  hosts: swednode1
+   roles:
+     - { role: swednode1_role,become: yes}
+
+-  hosts: swednode2
+   roles:
+     - { role: swednode2_role,become: yes}
+
+-  hosts: swedbankorg
+   roles:
+     - { role: swedbankorg_role,become: yes}
+
+   become_user: root

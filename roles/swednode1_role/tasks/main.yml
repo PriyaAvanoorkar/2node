@@ -1,0 +1,27 @@
+---
+# tasks file for installation on node 
+
+  #- name: Download main config file from s3
+    #get_url:
+     # url: https://aws-code-kubernetes.s3.eu-central-1.amazonaws.com/apigee_onprem/Corrected/mainConfig
+      #dest: /opt/apigee/mainConfig
+     # mode: '755'
+
+ # - name: Install dos2unix
+    #yum:
+      #name: dos2unix
+     # state: latest
+
+ # - name: Change file
+  #  command: dos2unix /opt/apigee/mainConfig
+
+  - name: Install Datastore cluster on nodes 1
+    command: 'sudo bash /opt/apigee/apigee-setup/bin/setup.sh -p ds -f /opt/apigee/configfile'
+    tags: ['ds']
+
+  - name: Restart Edge UI after installation
+    command: /opt/apigee/apigee-service/bin/apigee-service edge-ui restart
+    tags: ['restart']
+    
+    
+

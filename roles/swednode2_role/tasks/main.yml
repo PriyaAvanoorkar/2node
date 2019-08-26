@@ -1,0 +1,31 @@
+---
+# tasks file for swednode2_role
+
+  - name: Download main config file from s3
+    get_url:
+      url: https://aws-code-kubernetes.s3.eu-central-1.amazonaws.com/apigee_onprem/Corrected/mainConfig
+      dest: /opt/apigee/mainConfig
+      mode: '755'
+
+  - name: Download main config file from s3
+    get_url:
+      url: https://aws-code-kubernetes.s3.eu-central-1.amazonaws.com/apigee_onprem/Corrected/devPortalConfig
+      dest: /opt/apigee/devPortalConfig
+      mode: '755'
+
+  - name: Install dos2unix
+    yum:
+      name: dos2unix
+      state: latest
+
+  - name: Change mod mainConfig file
+    command: dos2unix /opt/apigee/mainConfig
+
+  - name: Change mod mainConfig file
+    command: dos2unix /opt/apigee/devPortalConfig
+
+  - name: Apigee sax component installation
+    command: /opt/apigee/apigee-setup/bin/setup.sh -p sax -f /opt/apigee/mainConfig	
+
+  - name: Apigee dp component installation
+    command: /opt/apigee/apigee-setup/bin/setup.sh -p dp -f /opt/apigee/devPortalConfig
